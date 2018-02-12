@@ -12,13 +12,13 @@ init();
 passport.use(
   new LocalStrategy(options, (username, password, done) => {
     db
-      .any("SELECT * FROM users WHERE username=$1", [username])
+      .any("SELECT * FROM accounts WHERE username=$1", [username])
       .then(rows => {
         const user = rows[0];
         if (!user) {
           return done(null, false);
         }
-        if (authHelpers.comparePass(password, user.password_digest)) {
+        if (authHelpers.comparePass(password, user.password)) {
           return done(null, user);
         } else {
           return done(null, false);

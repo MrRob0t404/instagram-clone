@@ -4,7 +4,6 @@ const passport = require("../auth/local");
 
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
-      console.log(err);
       if (err) {
         res.status(500).send("error while trying to log in");
       } else if (!user) {
@@ -30,6 +29,7 @@ function registerUser(req, res, next) {
   return authHelpers
     .createUser(req)
     .then(response => {
+      console.log("response: ", response);
       passport.authenticate("local", (err, user, info) => {
         if (user) {
           res.status(200).json({
@@ -43,7 +43,7 @@ function registerUser(req, res, next) {
     .catch(err => {
       res.status(500).json({
         status: "error",
-        error: err
+        error: err,
       });
     });
 }
