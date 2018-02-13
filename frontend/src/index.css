@@ -8,12 +8,12 @@ body {
   background-color: rgba(238, 238, 238, 0.2);
 }
 
-/* ---------- General ---------- */
+/* -------------------- General -------------------- */
 .bold {
   font-weight: bold;
 }
 
-/* ---------- Register ---------- */
+/* -------------------- Register Component -------------------- */
 .regMain {
   /* margin: 0 auto; */
   display: flex;
@@ -74,4 +74,37 @@ body {
 }
 .terms {
   font-size: 14px;
+}
+
+/* -------------------- nav bar -------------------- */
+nav {
+  border-bottom: 1px solid #ddd;
+}
+.instaLettersProfile {
+  height: 35px;
+}
+
+/* -------------------- Profile Component -------------------- */
+.profileBlurb {
+  width: 935px;
+  margin: 0 auto;
+  color: black;
+}
+.profileImage {
+  width: 293px;
+  height: 293px;
+  margin: 12px;
+}
+.profileHR {
+  width: 935px;
+  color: #ddd;
+  border: 1px solid #ddd;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.profileP {
+  margin: 0 auto;
+  display: inline-flex;
+  padding: 10px;
+  justify-content: center;
 }
