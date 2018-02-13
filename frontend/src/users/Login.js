@@ -8,7 +8,8 @@ class Login extends React.Component {
 		this.state = {
 			username: "",
 			password: "",
-			loggedIn: false
+			loggedIn: false,
+			message: ""
 		}
 	}
 
@@ -20,13 +21,28 @@ class Login extends React.Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		console.log('logged in', this.state)
-		this.setState({
-			username: "",
-			password: "",
-			loggedIn: true
-		})
-		
+		const { username, password, loggedIn } = this.state;
+		axios
+			.post('/users/login/', {
+				 username: username,
+				 password: password 
+			})
+			.then(res => {
+				console.log('logged in', this.state)
+				this.setState({
+					username: "",
+					password: "",
+					loggedIn: true
+				})
+			})
+			.catch(err => {
+				this.setState({
+					username: "",
+					password: "",
+					message: "Login failed. Try again."
+				})
+			})
+		// redircts to users profile
 		this.props.history.push(`/${this.state.username}`)
 	}
 
