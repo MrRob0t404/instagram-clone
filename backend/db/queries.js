@@ -25,11 +25,23 @@ function logoutUser(req, res, next) {
   res.status(200).send("log out success");
 }
 
+function getAllPictures(req, res, next) {
+  db.any("SELECT * FROM posts WHERE user_id=$1", req.params.id)
+    .then(data => {
+      // console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+
 function registerUser(req, res, next) {
+  console.log(req.body);
   return authHelpers
     .createUser(req)
     .then(response => {
-      console.log("response: ", response);
       passport.authenticate("local", (err, user, info) => {
         if (user) {
           res.status(200).json({
@@ -48,8 +60,17 @@ function registerUser(req, res, next) {
     });
 }
 
+function follow(req, res, next) {
+  return db.none(
+    "INSERT INTO following (user_id, following_id) VALUES (${user_id}, ${following_id})",
+    { user_id: req.user.user_id, following_id: req.params.following_id }
+  );
+}
+
 module.exports = {
   registerUser: registerUser,
   loginUser: loginUser,
-  logoutUser: logoutUser
+  logoutUser: logoutUser,
+  getAllPictures: getAllPictures,
+  follow: follow
 };
