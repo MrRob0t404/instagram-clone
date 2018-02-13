@@ -36,9 +36,39 @@ function getAllPictures(req, res, next) {
     });
 }
 
+function postImage(req, res, next) {
+  return db.none(
+    "INSERT INTO posts (user_id, post_descrip, img) VALUES (${user_id}, ${post_descrip}, ${img})",
+    { user_id: req.user.user_id, post_descrip: req.body.post_descrip, img: req.body.img }
+  )
+}
+
+function likePost(req, res, next) {
+  return db.none(
+    "INSERT INTO likes (post_id, user_id) VALUES (${post_id}, ${user_id})",
+    { post_id: req.params.post_id, user_id: req.user.user_id }
+  )
+}
+
+function comment(req, res, next) {
+  return db.none(
+    "INSERT INTO comments (post_id, user_id, comment) VALUES (${post_id}, ${user_id}, ${comment})",
+    { post_id: req.params.post_id, user_id: req.user.user_id, comment: req.body.comment }
+  )
+}
+
+function getAllFollowers(req, res, next) {
+  db.any("SELECT following_id FROM following WHERE user_id=$1", req.user.user_id)
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
 
 function registerUser(req, res, next) {
-  console.log(req.body);
   return authHelpers
     .createUser(req)
     .then(response => {
@@ -72,5 +102,9 @@ module.exports = {
   loginUser: loginUser,
   logoutUser: logoutUser,
   getAllPictures: getAllPictures,
-  follow: follow
+  follow: follow,
+  postImage: postImage,
+  likePost: likePost,
+  comment: comment,
+  getAllFollowers: getAllFollowers
 };
