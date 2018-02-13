@@ -26,7 +26,7 @@ class Login extends React.Component {
 			password: "",
 			loggedIn: true
 		})
-		// Redirects to path indicated
+		
 		this.props.history.push(`/${this.state.username}`)
 	}
 

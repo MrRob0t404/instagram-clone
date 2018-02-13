@@ -7,9 +7,9 @@ export default class Profile extends Component {
 		this.state = {
 			username: "",
 			bio: "",
-			followerCount: 0, // sad
-			followingCount: 0, // sad
-			images: [] // arr of obj
+			followerCount: 0, 
+			followingCount: 0,
+			images: []
 		}
 	}
 	
