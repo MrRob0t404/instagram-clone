@@ -6,6 +6,7 @@ export default class Profile extends Component {
   constructor() {
     super();
     this.state = {
+			searchInput: "",
       username: "testUsername",
       bio: "biography description goes here",
       followerCount: 0,
@@ -41,6 +42,7 @@ export default class Profile extends Component {
 
   render() {
     const {
+			searchInput,
       username,
       bio,
       followerCount,
@@ -48,19 +50,33 @@ export default class Profile extends Component {
       postCount,
       images,
       message
-    } = this.state;
+		} = this.state;
+		
+		// add logo and instaLetters to be a link to /feed/username?
     return (
       <div>
         <nav>
-					<img
-						src="https://cdn4.iconfinder.com/data/icons/picons-social/57/38-instagram-2-32.png"
-						alt="Instagram camera logo"
+					<div className="logoDiv">
+						<img
+							className="logo"
+							src="https://cdn4.iconfinder.com/data/icons/picons-social/57/38-instagram-2-48.png"
+							alt="Instagram camera logo"
+						/>
+						<div className="verticalLine"></div>
+						<img
+							className="instaLettersProfile"
+							src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
+							alt="Instagram"
+						/>
+					</div>
+					<input
+						className="searchbar"
+						type="text"
+						value={searchInput}
+						onChange={this.handleInput}
+						name="searchInput"
+						placeholder="Search"
 					/>
-          <img
-            className="instaLettersProfile"
-            src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
-            alt="Instagram"
-          />
           <Link to={`/${username}`}>{username}</Link>
         </nav>
 
