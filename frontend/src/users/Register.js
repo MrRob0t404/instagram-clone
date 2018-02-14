@@ -50,7 +50,7 @@ class Register extends React.Component {
           <div className="regDiv">
             <img
               className="instaLetters"
-              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
+              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png?i=1"
               alt="Instagram"
             />
             <h4 className="signupMsg">
@@ -62,7 +62,7 @@ class Register extends React.Component {
                 placeholder="Username"
                 onChange={this.handleInput}
                 name="username"
-                className="regInput"
+                className="userPassInput"
               />
               <br />
               <input
@@ -70,14 +70,14 @@ class Register extends React.Component {
                 placeholder="Password"
                 onChange={this.handleInput}
                 name="password"
-                className="regInput"
+                className="userPassInput"
               />
               <br />
               <input
                 type="submit"
                 className=""
                 value="Sign up"
-                className="regSubmit"
+                className="regLoginSubmit"
               />
             </form>
 

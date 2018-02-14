@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
 
 body {
   margin: 0;
@@ -13,6 +13,10 @@ body {
 .bold {
   font-weight: bold;
 }
+a {
+  color: #458eff;
+  text-decoration: none;
+}
 
 /* -------------------- Register Component -------------------- */
 .regDiv {
@@ -24,7 +28,6 @@ body {
   padding: 20px;
   margin-top: 40px;
 }
-
 .instaLetters {
   width: 175px;
 }
@@ -32,7 +35,7 @@ body {
   font-weight: bold;
   font-size: 17px;
 }
-.regInput {
+.userPassInput {
   width: 258px;
   height: 36px;
   padding: 1px 0 1px 8px;
@@ -41,11 +44,11 @@ body {
   border: 1px solid #eee;
   border-radius: 3px;
 }
-.regSubmit {
+.regLoginSubmit {
   width: 268px;
   height: 28px;
   padding: 2px;
-  margin: 3px;
+  margin: 10px 3px 3px 3px;
   font-family: Arial, sans-serif, sans-serif;
   background-color: #458eff;
   border: 1px solid #458eff;
@@ -56,6 +59,17 @@ body {
 }
 .terms {
   font-size: 14px;
+}
+
+/* -------------------- Login Component -------------------- */
+.loginDiv {
+  width: 300px;
+  height: 250px;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-top: 40px;
 }
 
 /* -------------------- nav bar -------------------- */
