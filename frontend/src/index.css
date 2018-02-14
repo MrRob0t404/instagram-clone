@@ -6,6 +6,7 @@ body {
   font-family: Arial, sans-serif;
   color: #999;
   background-color: rgba(238, 238, 238, 0.2);
+  height: 100%;
 }
 
 /* -------------------- General -------------------- */
@@ -14,21 +15,6 @@ body {
 }
 
 /* -------------------- Register Component -------------------- */
-.regMain {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  margin-top: 40px;
-}
-.regAndLoginDiv {
-  width: 350px;
-  height: 600px;
-  background-color: white;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
 .regDiv {
   width: 300px;
   height: 360px;
@@ -36,11 +22,7 @@ body {
   background-color: white;
   border: 1px solid #eee;
   padding: 20px;
-}
-.regLoginDiv {
-  margin: 0 auto;
-  background-color: white;
-  border: 1px solid #eee;
+  margin-top: 40px;
 }
 
 .instaLetters {
