@@ -14,7 +14,7 @@ CREATE TABLE accounts (
 CREATE TABLE following (
   follows_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES accounts,
-  following_id INTEGER REFERENCES accounts);
+  username  VARCHAR REFERENCES accounts(username));
 
 
 CREATE TABLE posts (

@@ -19,7 +19,8 @@ passport.use(
           return done(null, false);
         }
         if (authHelpers.comparePass(password, user.password)) {
-          return done(null, user);
+          var userNoPass = { user_id: user.user_id, username: username}
+          return done(null, userNoPass);
         } else {
           return done(null, false);
         }
