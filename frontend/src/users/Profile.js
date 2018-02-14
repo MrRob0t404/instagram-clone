@@ -7,12 +7,12 @@ export default class Profile extends Component {
 		this.state = {
 			username: "",
 			bio: "",
-			followerCount: 0, 
+			followerCount: 0,
 			followingCount: 0,
 			images: []
 		}
 	}
-	
+
 	componentDidMount() {
 		axios
 			.get('/users/something') // change later
@@ -26,6 +26,7 @@ export default class Profile extends Component {
 	render() {
 		return (
 			<div>
+        test
 			</div>
 		)
 	}

@@ -2,6 +2,30 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
+function registerUser(req, res, next) {
+  console.log(next);
+  return authHelpers
+    .createUser(req)
+    .then(response => {
+      passport.authenticate("local", (err, user, info) => {
+        if (user) {
+          res.status(200).json({
+            status: "success",
+            data: user,
+            message: "Registered one user"
+          });
+        }
+      })(req, res, next);
+    })
+    .catch(err => {
+      console.log(err.detail);
+      res.status(500).json({
+        error: err,
+        detail: err.detail
+      });
+    });
+}
+
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -75,28 +99,6 @@ function getAllFollowees(req, res, next) {
     })
     .catch(error => {
       res.json(error);
-    });
-}
-
-function registerUser(req, res, next) {
-  return authHelpers
-    .createUser(req)
-    .then(response => {
-      passport.authenticate("local", (err, user, info) => {
-        if (user) {
-          res.status(200).json({
-            status: "success",
-            data: user,
-            message: "Registered one user"
-          });
-        }
-      })(req, res, next);
-    })
-    .catch(err => {
-      res.status(500).json({
-        status: "error",
-        error: err,
-      });
     });
 }
 

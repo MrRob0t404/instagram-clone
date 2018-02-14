@@ -21,29 +21,31 @@ class Register extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const { username, password } = this.state;
-    console.log("submitted new user");
     axios
       .post("/users/new", {
         username: username,
         password: password
       })
       .then(res => {
-        this.setState({
-          username: "",
-          password: ""
-        });
+        // this.setState({
+        //   username: "",
+        //   password: ""
+        // });
+        console.log("submitted new user");
+
+        this.props.history.push(`/${this.state.username}`);
 			})
 			.catch(err => {
+        console.log(err.response.data.detail);
 				this.setState({
-					message: "Error creating new user."
+          message: err.detail
 				})
 			})
-
-    this.props.history.push(`/${this.state.username}`);
   };
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, message } = this.state;
+    console.log(message);
     return (
       <div className="regMain">
         <div className="regAndLoginDiv">
