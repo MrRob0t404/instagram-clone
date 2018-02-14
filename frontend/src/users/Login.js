@@ -28,7 +28,12 @@ class Login extends React.Component {
 				 password: password
 			})
 			.then(res => {
-				this.props.history.push(`/${this.state.username}`)
+				// console.log(res.data);
+				// this.props.setUser(res.data);
+      	// this.setState({
+        // 	loggedIn: true
+      	// });
+				this.props.history.push(`/${this.state.username}`);
 			})
 			.catch(err => {
 				this.setState({
@@ -41,7 +46,6 @@ class Login extends React.Component {
 
 	render() {
 		const { username, password, loggedIn, message } = this.state;
-		console.log("after login", this.state)
 		return (
 			<div>
 				<h1>Login</h1>

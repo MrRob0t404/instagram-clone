@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 export default class Profile extends Component {
   constructor() {
@@ -10,7 +11,8 @@ export default class Profile extends Component {
 			bio: "",
 			followerCount: 0,
 			followingCount: 0,
-			images: []
+			images: [],
+      loggedIn: false
 		}
 	}
 
@@ -35,6 +37,7 @@ export default class Profile extends Component {
 	render() {
 		return (
 			<div>
+        <Logout />
 			</div>
 		)
 	}
