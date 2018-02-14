@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
+
+import Logout from './Logout';
 
 export default class Profile extends Component {
   constructor() {
@@ -37,26 +39,38 @@ export default class Profile extends Component {
           message: `Error retrieving profile for ${this.state.username}.`
         });
       });
-  }
+	}
+	
+	handleInput = e => {
+		this.setState({
+			[e.target.name]: e.target.value
+		})
+	}
 
   handleAddImage = e => {
     this.setState({ addImg: !this.state.addImg });
 	};
 	
 	handleSubmit = e => {
+		e.preventDefault();
 		axios
 			.post('/users/postImage', {
 				post_descrip: this.state.newDesc,
 				img: this.state.newURL
+			},
+			this.setState({
+				newDesc: "",
+				newURL: "",
+				message: "Added image",
+				addImg: false
 			})
+		)
 			.then(res => {
-				this.setState({
-					message: "Added image"
-				})
+				console.log("Added image!")
 			})
 			.catch(err => {
 				this.setState({
-					
+					message: "Error posting new image"
 				})
 			})
 	}
@@ -64,7 +78,6 @@ export default class Profile extends Component {
   render() {
     const { searchInput, username, bio, followerCount, followingCount, postCount, images, message, addImg, newDesc, newURL
     } = this.state;
-    console.log(this.state.addImg);
     // add logo and instaLetters to be a link to /feed/username?
     return (
       <div>
@@ -76,44 +89,24 @@ export default class Profile extends Component {
               alt="Instagram camera logo"
             />
             <div className="verticalLine" />
-            <img
-              className="instaLettersProfile"
-              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
-              alt="Instagram"
+            <img className="instaLettersProfile" src="http://pngimg.com/uploads/instagram/instagram_PNG5.png" alt="Instagram"
             />
           </div>
-          <input
-            className="searchbar"
-            type="text"
-            value={searchInput}
-            onChange={this.handleInput}
-            name="searchInput"
-            placeholder="Search"
-          />
+          <input className="searchbar" type="text" value={searchInput} onChange={this.handleInput} name="searchInput" placeholder="Search" />
           <Link to={`/${username}`}>{username}</Link>
+					<Logout />
         </nav>
 
         <div>
           <button onClick={this.handleAddImage}>Add Image</button>
         </div>
+
         <div>
           {addImg ? (
             <div>
               <form onSubmit={this.handleSubmit}>
-                <input
-                  type="text"
-                  value={this.state.newURL}
-                  placeholder="URL"
-                  name="newURL"
-                  onChange={this.handleNewURL}
-                />
-                <input
-                  type="text"
-                  value={this.state.newDesc}
-                  placeholder="Description"
-                  name="newDesc"
-                  onChange={this.handleNewDesc}
-                />
+                <input type="text" value={newURL} placeholder="URL" name="newURL" onChange={this.handleInput} />
+                <input type="text" value={newDesc} placeholder="Description" name="newDesc" onChange={this.handleInput} />
                 <input type="submit" />
               </form>
             </div>
