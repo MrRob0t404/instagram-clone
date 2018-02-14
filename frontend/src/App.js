@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Route, Link, Switch} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 

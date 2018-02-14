@@ -28,10 +28,7 @@ class Register extends React.Component {
         password: password
       })
       .then(res => {
-        this.setState({
-          username: "",
-          password: ""
-        });
+					this.props.history.push(`/${this.state.username}`);
 			})
 			.catch(err => {
 				this.setState({
@@ -39,7 +36,6 @@ class Register extends React.Component {
 				})
 			})
 
-    this.props.history.push(`/${this.state.username}`);
   };
 
   render() {
@@ -86,11 +82,11 @@ class Register extends React.Component {
               <span className="bold">Terms</span> &{" "}
               <span className="bold">Privacy Policy</span>
             </p>
-            <div className="regLoginDiv">
+            {/* <div className="regLoginDiv"> */}
               <p>
                 Have an account? <Link to="/login">Login</Link>
               </p>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>

@@ -28,12 +28,7 @@ class Login extends React.Component {
 				 password: password 
 			})
 			.then(res => {
-				console.log('logged in', this.state)
-				this.setState({
-					username: "",
-					password: "",
-					loggedIn: true
-				})
+				this.props.history.push(`/${this.state.username}`)
 			})
 			.catch(err => {
 				this.setState({
@@ -42,8 +37,6 @@ class Login extends React.Component {
 					message: "Login failed. Try again."
 				})
 			})
-		// redircts to users profile
-		this.props.history.push(`/${this.state.username}`)
 	}
 
 	render() {
