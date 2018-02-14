@@ -27,25 +27,23 @@ class Register extends React.Component {
         password: password
       })
       .then(res => {
-        // this.setState({
-        //   username: "",
-        //   password: ""
-        // });
-        console.log("submitted new user");
-
         this.props.history.push(`/${this.state.username}`);
 			})
 			.catch(err => {
-        console.log(err.response.data.detail);
 				this.setState({
-          message: err.detail
+          username: "",
+          password: "",
+          message: err.response.data.detail
 				})
 			})
   };
 
   render() {
     const { username, password, message } = this.state;
-    console.log(message);
+    var alreadyExist = "";
+    if (message.length > 0) {
+      alreadyExist = "user already exists" ;
+    }
     return (
       <div className="regMain">
         <div className="regAndLoginDiv">
@@ -92,6 +90,7 @@ class Register extends React.Component {
               <p>
                 Have an account? <Link to="/login">Login</Link>
               </p>
+              <h5>{alreadyExist}</h5>
             {/* </div> */}
           </div>
         </div>

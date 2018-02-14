@@ -25,7 +25,7 @@ class Login extends React.Component {
 		axios
 			.post('/users/login/', {
 				 username: username,
-				 password: password 
+				 password: password
 			})
 			.then(res => {
 				this.props.history.push(`/${this.state.username}`)
@@ -34,15 +34,14 @@ class Login extends React.Component {
 				this.setState({
 					username: "",
 					password: "",
-					message: "Login failed. Try again."
+					message: err.response.data
 				})
 			})
 	}
 
 	render() {
-		const { username, password, loggedIn } = this.state;
+		const { username, password, loggedIn, message } = this.state;
 		console.log("after login", this.state)
-
 		return (
 			<div>
 				<h1>Login</h1>
@@ -53,8 +52,9 @@ class Login extends React.Component {
 					<br />
 					<input type="submit" />
 				</form>
-				
+
 				<Link to='/'>Register</Link>
+				{message? <h5>{message}</h5>: null}
 			</div>
 		)
 	}
