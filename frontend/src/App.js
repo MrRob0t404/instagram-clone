@@ -5,17 +5,18 @@ import './App.css';
 
 import Register from './users/Register';
 import Login from './users/Login';
-import Feed from './users/Feed'
+import Profile from './users/Profile';
 
 class App extends Component {
+
 
   render() {
     return (
       <div className="App">
         <Switch>
-          <Route exact path='/' component={Register}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/:username' component={Feed}/>
+          <Route exact path='/' component={Register} />
+          <Route path='/login' component={Login} />
+          <Route path='/:username' component={Profile} />
         </Switch>
       </div>
     );

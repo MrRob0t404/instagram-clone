@@ -1,32 +1,141 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default class Profile extends Component {
   constructor() {
-		super();
-		this.state = {
-			username: "",
-			bio: "",
-			followerCount: 0, 
-			followingCount: 0,
-			images: []
-		}
-	}
+    super();
+    this.state = {
+      searchInput: "",
+      username: "username",
+      bio: "bio",
+      followerCount: 0,
+      followingCount: 0,
+      postCount: 0,
+      images: [],
+      message: "",
+			addImg: false,
+			newURL: "",
+			newDesc: ""
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get(`/users/${this.state.username}/posts`)
+      .then(res => {
+        this.setState({
+          username: res.data.username,
+          bio: res.data.bio,
+          followerCount: res.data.followers.length,
+          followingCount: res.data.following.length,
+          images: res.data.images
+        });
+      })
+      .catch(err => {
+        this.setState({
+          message: `Error retrieving profile for ${this.state.username}.`
+        });
+      });
+  }
+
+  handleAddImage = e => {
+    this.setState({ addImg: !this.state.addImg });
+	};
 	
-	componentDidMount() {
+	handleSubmit = e => {
 		axios
-			.get('/users/something') // change later
+			.post('/users/postImage', {
+				post_descrip: this.state.newDesc,
+				img: this.state.newURL
+			})
 			.then(res => {
 				this.setState({
-
+					message: "Added image"
+				})
+			})
+			.catch(err => {
+				this.setState({
+					
 				})
 			})
 	}
 
-	render() {
-		return (
-			<div>
-			</div>
-		)
-	}
+  render() {
+    const { searchInput, username, bio, followerCount, followingCount, postCount, images, message, addImg, newDesc, newURL
+    } = this.state;
+    console.log(this.state.addImg);
+    // add logo and instaLetters to be a link to /feed/username?
+    return (
+      <div>
+        <nav>
+          <div className="logoDiv">
+            <img
+              className="logo"
+              src="https://cdn4.iconfinder.com/data/icons/picons-social/57/38-instagram-2-48.png"
+              alt="Instagram camera logo"
+            />
+            <div className="verticalLine" />
+            <img
+              className="instaLettersProfile"
+              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
+              alt="Instagram"
+            />
+          </div>
+          <input
+            className="searchbar"
+            type="text"
+            value={searchInput}
+            onChange={this.handleInput}
+            name="searchInput"
+            placeholder="Search"
+          />
+          <Link to={`/${username}`}>{username}</Link>
+        </nav>
+
+        <div>
+          <button onClick={this.handleAddImage}>Add Image</button>
+        </div>
+        <div>
+          {addImg ? (
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  type="text"
+                  value={this.state.newURL}
+                  placeholder="URL"
+                  name="newURL"
+                  onChange={this.handleNewURL}
+                />
+                <input
+                  type="text"
+                  value={this.state.newDesc}
+                  placeholder="Description"
+                  name="newDesc"
+                  onChange={this.handleNewDesc}
+                />
+                <input type="submit" />
+              </form>
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div className="profileBlurb">
+            <h2>{username}</h2>
+            <p className="profileP">{postCount} posts</p>
+            <p className="profileP">{followerCount} followers</p>
+            <p className="profileP">{followingCount} following</p>
+            <p>{bio}</p>
+          </div>
+          <hr className="profileHR" />
+          {images.map(imgURL => {
+            return (
+              <img src={imgURL} alt="user image" className="profileImage" />
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 }

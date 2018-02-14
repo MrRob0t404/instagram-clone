@@ -8,23 +8,23 @@ body {
   background-color: rgba(238, 238, 238, 0.2);
 }
 
-/* ---------- General ---------- */
+/* -------------------- General -------------------- */
 .bold {
   font-weight: bold;
 }
 
-/* ---------- Register ---------- */
+/* -------------------- Register Component -------------------- */
 .regMain {
-  /* margin: 0 auto; */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background-color: rgba(123, 228, 193, 0.404);
+  background-color: white;
   margin-top: 40px;
 }
 .regAndLoginDiv {
   width: 350px;
   height: 600px;
-  background-color: rgba(204, 94, 167, 0.685);
+  background-color: white;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -74,4 +74,65 @@ body {
 }
 .terms {
   font-size: 14px;
+}
+
+/* -------------------- nav bar -------------------- */
+nav {
+  border-bottom: 1px solid #ddd;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+.logoDiv {
+  /* background-color: #ddd; */
+  display: inline-flex;
+  margin: 4px;
+}
+.logo {
+  padding-right: 20px;
+  height: 29px;
+  width: 29px;
+}
+.verticalLine {
+  border-left: 1px solid #aaa;
+  padding-left: 20px;
+  height: 35px;
+}
+.instaLettersProfile {
+  height: 38px;
+}
+.searchbar {
+  text-align: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  height: 25px;
+  background-color: rgb(248, 245, 245);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+/* -------------------- Profile Component -------------------- */
+.profileBlurb {
+  width: 935px;
+  margin: 0 auto;
+  color: black;
+}
+.profileImage {
+  width: 293px;
+  height: 293px;
+  margin: 12px;
+}
+.profileHR {
+  width: 935px;
+  color: #ddd;
+  border: 1px solid #ddd;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.profileP {
+  margin: 0 auto;
+  display: inline-flex;
+  padding: 10px;
+  justify-content: center;
 }
