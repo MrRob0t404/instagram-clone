@@ -2,6 +2,30 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
+function registerUser(req, res, next) {
+  console.log(next);
+  return authHelpers
+    .createUser(req)
+    .then(response => {
+      passport.authenticate("local", (err, user, info) => {
+        if (user) {
+          res.status(200).json({
+            status: "success",
+            data: user,
+            message: "Registered one user"
+          });
+        }
+      })(req, res, next);
+    })
+    .catch(err => {
+      console.log(err.detail);
+      res.status(500).json({
+        error: err,
+        detail: err.detail
+      });
+    });
+}
+
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -26,9 +50,9 @@ function logoutUser(req, res, next) {
 }
 
 function getAllPictures(req, res, next) {
-  db.any("SELECT * FROM posts WHERE user_id=$1", req.params.id)
+  db.any("SELECT posts_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.params.username)
     .then(data => {
-      // console.log(data);
+      console.log(data);
       res.json(data);
     })
     .catch(error => {
@@ -58,7 +82,7 @@ function comment(req, res, next) {
 }
 
 function getAllFollowers(req, res, next) {
-  db.any("SELECT following_id FROM following WHERE user_id=$1", req.user.user_id)
+  db.any("SELECT username FROM following WHERE user_id=$1", req.user.user_id)
     .then(data => {
       console.log(data);
       res.json(data);
@@ -68,33 +92,32 @@ function getAllFollowers(req, res, next) {
     });
 }
 
-function registerUser(req, res, next) {
-  return authHelpers
-    .createUser(req)
-    .then(response => {
-      passport.authenticate("local", (err, user, info) => {
-        if (user) {
-          res.status(200).json({
-            status: "success",
-            data: user,
-            message: "Registered one user"
-          });
-        }
-      })(req, res, next);
+function getAllFollowees(req, res, next) {
+  db.any("SELECT accounts.username FROM accounts INNER JOIN following ON(accounts.user_id=following.user_id) WHERE following.username=$1;", req.user.username)
+    .then(data => {
+      res.json(data);
     })
-    .catch(err => {
-      res.status(500).json({
-        status: "error",
-        error: err,
-      });
+    .catch(error => {
+      res.json(error);
     });
 }
 
 function follow(req, res, next) {
   return db.none(
-    "INSERT INTO following (user_id, following_id) VALUES (${user_id}, ${following_id})",
-    { user_id: req.user.user_id, following_id: req.params.following_id }
+    "INSERT INTO following (user_id, username) VALUES (${user_id}, ${username})",
+    { user_id: req.user.user_id, username: req.params.username }
   );
+}
+
+function getSingleUser(req, res, next) {
+  db.any("SELECT user_id, username, email, bio FROM accounts WHERE username=$1", req.params.username)
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
 }
 
 module.exports = {
@@ -106,5 +129,7 @@ module.exports = {
   postImage: postImage,
   likePost: likePost,
   comment: comment,
-  getAllFollowers: getAllFollowers
+  getAllFollowers: getAllFollowers,
+  getAllFollowees: getAllFollowees,
+  getSingleUser: getSingleUser
 };

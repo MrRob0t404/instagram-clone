@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link, Route } from "react-router-dom";
 
+import Logout from './Logout';
+
 export default class Profile extends Component {
   constructor() {
     super();
@@ -92,7 +94,7 @@ export default class Profile extends Component {
           </div>
           <input className="searchbar" type="text" value={searchInput} onChange={this.handleInput} name="searchInput" placeholder="Search" />
           <Link to={`/${username}`}>{username}</Link>
-					<Link to={`/${username}/logout`}>Log out</Link>
+					<Logout />
         </nav>
 
         <div>

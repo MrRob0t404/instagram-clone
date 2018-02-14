@@ -1,47 +1,56 @@
-// import React from "react";
-// import axios from "axios";
+import React from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
+import Login from "./Login";
 
-// const Logout = ({ handleLogout, message, loggedIn }) => {
-// 	const confirmLogout = () => {
-// 		return (
-// 			<div>
-// 				<h3>Are you sure you want to logout?</h3>
-// 				<button onClick={handleLogout}>Yes</button>
-// 			</div>
-// 		)
-// 	}
+class Logout extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null,
+      statusText: "",
+      logged: false
+    };
+  }
 
-// 	const loginFirst = () => {
-// 		return (
-// 			<div>
-// 				<h3>You must first log in.</h3>
-// 				<Link to='/login'>Login</Link>
-// 			</div>
-// 		)
-// 	}
+  setUser = user => {
+    this.setState({ user: user, logged: true });
+  };
 
-// 	handleLogout = () => {
-// 		axios
-// 			.get('/users/logout')
-// 			.then(res => {
-// 				console.log(res.data)
-// 				this.setState({
-// 					loggedIn: false
-// 				})
-// 			})
-// 			.catch(err => {
-// 				this.setState({
-// 					message: "Error logging out."
-// 				})
-// 			})
-// 			this.props.history.push('/') // send to landing page
-// 	}
+  renderLogin = () => {
+    return <Login setUser={this.setUser} />;
+  };
 
-//   return (
-// 		<div>
-// 			{loggedIn ? confirmLogout() : loginFirst()}
-// 		</div>
-// 	);
-// };
+handleLogout = (e) => {
+  e.preventDefault();
+  axios
+    .get(`/users/logout`)
+    .then(res => {
+      this.setState({
+        logged: false,
+        user: null,
+        statusText: res.statusText
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
 
-// export default Logout;
+
+  render () {
+    const {user, logged, statusText} = this.state;
+    if (statusText === "OK") {
+      this.setState({statusText: ""})
+      return <Redirect to="/login" />
+    }
+    return (
+  		<div>
+        <button onClick={this.handleLogout}>sign out</button>
+  		</div>
+  	);
+  }
+};
+
+export default Logout;
