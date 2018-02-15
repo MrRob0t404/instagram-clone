@@ -50,9 +50,23 @@ function logoutUser(req, res, next) {
 }
 
 function getAllPictures(req, res, next) {
+  console.log("kkkkk: ", req.user);
   db.any("SELECT posts_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.params.username)
     .then(data => {
+      console.log("all pictures");
       console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getAllImages(req, res, next) {
+  db.any("SELECT posts_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.user.username)
+    .then(data => {
+      // console.log(data);
+      // console.log("test");
       res.json(data);
     })
     .catch(error => {
@@ -131,5 +145,6 @@ module.exports = {
   comment: comment,
   getAllFollowers: getAllFollowers,
   getAllFollowees: getAllFollowees,
-  getSingleUser: getSingleUser
+  getSingleUser: getSingleUser,
+  getAllImages: getAllImages
 };
