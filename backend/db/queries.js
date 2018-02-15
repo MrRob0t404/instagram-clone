@@ -63,7 +63,7 @@ function getAllPictures(req, res, next) {
 }
 
 function getAllImages(req, res, next) {
-  db.any("SELECT posts_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.user.username)
+  db.any("SELECT posts_id, post_descrip, img, username FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.user.username)
     .then(data => {
       // console.log(data);
       // console.log("test");
