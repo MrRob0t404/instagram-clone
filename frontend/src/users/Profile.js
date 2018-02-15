@@ -11,7 +11,9 @@ class  Profile extends React.Component {
       following: "",
       followers: "",
       images: [],
-      addImage: false
+      addImage: false,
+      newDesc: "",
+			newURL: ""
     }
   }
 
@@ -36,30 +38,72 @@ class  Profile extends React.Component {
         .catch(err => {
           console.log(err);
         });
-        axios
-          .get(`/users`)
-          .then(res => {
-            this.setState({
-              images: res.data
-            });
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        // axios
+        //   .get(`/users`)
+        //   .then(res => {
+        //     this.setState({
+        //       images: res.data
+        //     });
+        //   })
+          // .catch(err => {
+          //   console.log(err);
+          // });
+          this.getImages()
   }
 
-  addImages = () => {
+  getImages = () => {
+    axios
+      .get(`/users`)
+      .then(res => {
+        this.setState({
+          images: res.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  // -------------------- PROFILE HANDLER FUNCTIONS -------------------- //
+	handleSubmitPost = e => {
+		e.preventDefault();
+		axios
+			.post('/users/postImage', {
+				post_descrip: this.state.newDesc,
+				img: this.state.newURL
+			},
+			this.setState({
+				newDesc: "",
+				newURL: "",
+				message: "Added image",
+				addImage: false
+			}),
+      this.getImages()
+		)
+			.then(res => {
+				console.log("Added image!")
+			})
+			.catch(err => {
+				this.setState({
+					message: "Error posting new image"
+				})
+			})
+	}
+
+  handleInput = e => {
     this.setState({
-      addImage: true
+      [e.target.name]: e.target.value
     })
   }
-
+	handleAddImage = e => {
+    this.setState({ addImage: !this.state.addImage });
+	};
 
   render() {
-    const { user_id, username, message, newURL, newDesc,
-            bio, handleInput, handleSubmitPost,
-            handleAddImage, addImg } = this.props;
-    const { followers, following, images, follower, addImage } = this.state;
+    const { user_id, username,
+            bio } = this.props;
+    const { newDesc, newURL, followers, following, images, follower, addImage } = this.state;
+    console.log("addImg: ", addImage)
   return (
     <div>
    <nav>
@@ -87,26 +131,26 @@ class  Profile extends React.Component {
    </nav>
 
    <div>
-     <button onClick={handleAddImage}>Add Image</button>
+     <button onClick={this.handleAddImage}>Add Image</button>
    </div>
 
    <div>
-     {addImg
+     {addImage
        ? (
          <div>
-           <form onSubmit={handleSubmitPost}>
+           <form onSubmit={this.handleSubmitPost}>
              <input
                type="text"
                value={newURL}
                placeholder="URL"
                name="newURL"
-               onChange={handleInput}/>
+               onChange={this.handleInput}/>
              <input
                type="text"
                value={newDesc}
                placeholder="Description"
                name="newDesc"
-               onChange={handleInput}/>
+               onChange={this.handleInput}/>
              <input type="submit"/>
            </form>
          </div>
