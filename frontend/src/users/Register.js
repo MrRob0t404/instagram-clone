@@ -44,7 +44,7 @@ class Register extends React.Component {
     if (message.length > 0) {
       alreadyExist = "user already exists" ;
     }
-    return (
+    return ( 
       <div className="regMain">
         <div className="regAndLoginDiv">
           <div className="regDiv">

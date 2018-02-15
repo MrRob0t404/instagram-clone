@@ -16,10 +16,6 @@ class User extends Component {
       following: [],
       message: "",
 			loggedIn: false,
-			newDesc: "",
-			newURL: "",
-			addImg: false,
-			images: [],
 			bio: ""
     };
   }
@@ -53,7 +49,7 @@ class User extends Component {
     });
   };
 
-	// -------------------- LOGIN HANDLER FUNCTIONS -------------------- // 
+	// -------------------- LOGIN HANDLER FUNCTIONS -------------------- //
   handleSubmitLogin = e => {
 		e.preventDefault();
 		console.log('something')
@@ -77,35 +73,8 @@ class User extends Component {
         });
       });
 	};
-	
-	// -------------------- PROFILE HANDLER FUNCTIONS -------------------- //
-	handleSubmitPost = e => {
-		e.preventDefault();
-		axios
-			.post('/users/postImage', {
-				post_descrip: this.state.newDesc,
-				img: this.state.newURL
-			},
-			this.setState({
-				newDesc: "",
-				newURL: "",
-				message: "Added image",
-				addImg: false
-			})
-		)
-			.then(res => {
-				console.log("Added image!")
-			})
-			.catch(err => {
-				this.setState({
-					message: "Error posting new image"
-				})
-			})
-	}
 
-	handleAddImage = e => {
-    this.setState({ addImg: !this.state.addImg });
-	};
+
 
 	// -------------------- RENDER FUNCTIONS -------------------- //
   renderLogin() {

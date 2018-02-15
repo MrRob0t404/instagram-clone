@@ -17,5 +17,6 @@ router.get("/:username/posts", loginRequired, db.getAllPictures);
 router.get("/followers", loginRequired, db.getAllFollowers);
 router.get("/followees", loginRequired, db.getAllFollowees);
 router.get("/:username", loginRequired, db.getSingleUser);
+router.get("/", loginRequired, db.getAllImages);
 
 module.exports = router;
