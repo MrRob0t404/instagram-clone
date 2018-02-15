@@ -13,7 +13,7 @@ class  Profile extends React.Component {
       images: [],
       addImage: false,
       newDesc: "",
-			newURL: ""
+			newURL: "",
     }
   }
 
@@ -56,7 +56,7 @@ class  Profile extends React.Component {
       .get(`/users`)
       .then(res => {
         this.setState({
-          images: res.data
+          images: res.data,
         });
       })
       .catch(err => {
@@ -100,10 +100,11 @@ class  Profile extends React.Component {
 	};
 
   render() {
-    const { user_id, username,
-            bio } = this.props;
-    const { newDesc, newURL, followers, following, images, follower, addImage } = this.state;
-    console.log("addImg: ", addImage)
+    const { user_id, username, bio } = this.props;
+    const { newDesc, newURL, followers,
+            following, images, follower,
+            addImage } = this.state;
+
   return (
     <div>
    <nav>
@@ -177,7 +178,7 @@ class  Profile extends React.Component {
      <hr className="profileHR"/>
       {images? images.map(imgURL => {
          return <div><img src={imgURL.img} alt="user image" className="profileImage"/>
-         <p>{imgURL.post_descrip}</p></div>
+         <p>{imgURL.username}: {imgURL.post_descrip}</p></div>
        }): "No images"}
    </div>
  </div>
@@ -187,63 +188,3 @@ class  Profile extends React.Component {
 };
 
 export default Profile;
-
-// return (
-//   <div>
-//
-//     <nav>
-//       <div className="logoDiv">
-//         <img
-//           className="logo"
-//           src="https://cdn4.iconfinder.com/data/icons/picons-social/57/38-instagram-2-48.png"
-//           alt="Instagram camera logo"
-//         />
-//       </div>
-//       <div className="verticalLine" />
-//         <img
-//           className="instaLettersProfile"
-//           src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
-//           alt="Instagram"
-//         />
-//       </div>
-//       {/* <input
-//         className="searchbar"
-//         type="text"
-//         value={searchInput}
-//         onChange={handleInput}
-//         name="searchInput"
-//         placeholder="Search"
-//       /> */}
-//       </nav>
-//       <Link to={`/${username}`}>{username}</Link>
-//       <Logout />
-//
-//
-//     <div>
-//       <button onClick={this.addImages}>Add Image</button>
-//     </div>
-//
-//     <div>
-//       <div className="profileBlurb">
-//         <h2>{username}</h2>
-//         <p className="profileP"> posts {images.length}</p>
-//         <p className="profileP"> followers {followers.length}</p>
-//         <p className="profileP"> following {following.length}</p>
-//         <p>{bio}</p>
-//       </div>
-//       <div>
-//         <ul>
-//           {followers? followers.map( follower => {
-//             return <li><Link to="/follower.username">{follower.username}</Link></li>
-//           }): "no any followers yet"}
-//         </ul>
-//       </div>
-//       <div>
-//         <hr className="profileHR" />
-//         {images? images.map(imgURL => {
-//           return <img alt="user image" src={imgURL.img} className="profileImage" />
-//         }): "No images"}
-//       </div>
-//
-//   </div>
-// );
