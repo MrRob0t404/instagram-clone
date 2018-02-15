@@ -53,7 +53,7 @@ class User extends Component {
     });
   };
 
-	// -------------------- LOGIN HANDLER FUNCTIONS -------------------- // 
+	// -------------------- LOGIN HANDLER FUNCTIONS -------------------- //
   handleSubmitLogin = e => {
 		e.preventDefault();
 		console.log('something')
@@ -77,7 +77,7 @@ class User extends Component {
         });
       });
 	};
-	
+
 	// -------------------- PROFILE HANDLER FUNCTIONS -------------------- //
 	handleSubmitPost = e => {
 		e.preventDefault();
