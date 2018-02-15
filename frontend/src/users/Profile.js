@@ -176,7 +176,8 @@ class  Profile extends React.Component {
      </div>
      <hr className="profileHR"/>
       {images? images.map(imgURL => {
-         return <img src={imgURL.img} alt="user image" className="profileImage"/>
+         return <div><img src={imgURL.img} alt="user image" className="profileImage"/>
+         <p>{imgURL.post_descrip}</p></div>
        }): "No images"}
    </div>
  </div>
