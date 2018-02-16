@@ -46,7 +46,7 @@ handleLogout = (e) => {
       return <Redirect to="/login" />
     }
     return (
-  		<div>
+  		<div className="logoutButton">
         <button onClick={this.handleLogout}>sign out</button>
   		</div>
   	);

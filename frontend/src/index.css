@@ -13,9 +13,22 @@ body {
 .bold {
   font-weight: bold;
 }
+.boldBlackText {
+  font-weight: bold;
+  color: #000;
+}
 a {
   color: #458eff;
   text-decoration: none;
+}
+button {
+  background-color: #458eff;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #458eff;
+  border-radius: 3px;
+  padding: 5px;
+  font-weight: bold;
 }
 
 /* -------------------- Register Component -------------------- */
@@ -107,6 +120,9 @@ nav {
   margin-left: 40px;
   margin-right: 40px;
 }
+.logoutButton {
+  display: inline-flex;
+}
 
 /* -------------------- Profile Component -------------------- */
 .profileBlurb {
@@ -131,4 +147,9 @@ nav {
   display: inline-flex;
   padding: 10px;
   justify-content: center;
+  font-weight: bold;
+}
+.addImageButton {
+  display: inline-flex;
+  margin: 10px;
 }
