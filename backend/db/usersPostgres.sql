@@ -18,7 +18,7 @@ CREATE TABLE following (
 
 
 CREATE TABLE posts (
-  posts_id SERIAL PRIMARY KEY,
+  post_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES accounts,
   post_descrip VARCHAR,
   img VARCHAR);

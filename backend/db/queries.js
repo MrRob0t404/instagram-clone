@@ -3,7 +3,6 @@ const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
 function registerUser(req, res, next) {
-  console.log(next);
   return authHelpers
     .createUser(req)
     .then(response => {
@@ -51,7 +50,7 @@ function logoutUser(req, res, next) {
 
 function getAllPictures(req, res, next) {
   console.log("kkkkk: ", req.user);
-  db.any("SELECT posts_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.params.username)
+  db.any("SELECT post_id, post_descrip, img FROM posts INNER JOIN accounts ON(accounts.user_id=post.user_id) WHERE username=$1", req.params.username)
     .then(data => {
       console.log("all pictures");
       console.log(data);
@@ -63,9 +62,10 @@ function getAllPictures(req, res, next) {
 }
 
 function getAllImages(req, res, next) {
-  db.any("SELECT posts_id, post_descrip, img, username FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.user.username)
+  console.log(req.user.username);
+  db.any("SELECT post_id, post_descrip, img, username FROM posts INNER JOIN accounts ON(accounts.user_id=posts.user_id) WHERE username=$1", req.user.username)
     .then(data => {
-      // console.log(data);
+      console.log(data);
       // console.log("test");
       res.json(data);
     })
@@ -82,23 +82,25 @@ function postImage(req, res, next) {
 }
 
 function likePost(req, res, next) {
+  console.log(req.body.post_id);
   return db.none(
     "INSERT INTO likes (post_id, user_id) VALUES (${post_id}, ${user_id})",
-    { post_id: req.params.post_id, user_id: req.user.user_id }
+    {post_id: req.body.post_id, user_id: req.user.user_id}
   )
 }
 
 function comment(req, res, next) {
+  console.log(req.body.post_id);
+  console.log(req.body.comment);
   return db.none(
     "INSERT INTO comments (post_id, user_id, comment) VALUES (${post_id}, ${user_id}, ${comment})",
-    { post_id: req.params.post_id, user_id: req.user.user_id, comment: req.body.comment }
+    { post_id: req.body.post_id, user_id: req.user.user_id, comment: req.body.comment }
   )
 }
 
 function getAllFollowers(req, res, next) {
   db.any("SELECT username FROM following WHERE user_id=$1", req.user.user_id)
     .then(data => {
-      console.log(data);
       res.json(data);
     })
     .catch(error => {
@@ -134,6 +136,51 @@ function getSingleUser(req, res, next) {
     });
 }
 
+function getSingleUserNoPassword(req, res, next) {
+  db.any("SELECT user_id, username, email, bio FROM accounts WHERE username=$1", req.params.username)
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getAllFeeds(req, res, next) {
+  db.any("SELECT post_descrip, posts.post_id, img, accounts.username, comment, likes_id FROM accounts INNER JOIN following ON(following.user_id=accounts.user_id) INNER JOIN posts ON(posts.user_id=following.user_id ) INNER JOIN comments ON(comments.post_id=posts.post_id)INNER JOIN likes ON(likes.post_id=posts.post_id) WHERE following.username=$1", req.user.username)
+  // db.any("SELECT post_descrip, posts.post_id, img, accounts.username, comments FROM accounts INNER JOIN following ON(following.user_id=accounts.user_id) INNER JOIN posts ON(posts.user_id=following.user_id ) INNER JOIN comments ON(comments.post_id=posts.post_id)INNER JOIN likes ON(likes.post_id=posts.post_id) WHERE following.USERname='umed';")
+  db.any("SELECT post_descrip, posts.post_id, img, USERname FROM posts INNER JOIN following ON(posts.user_id=following.user_id ) WHERE following.username=$1;", req.user.username)
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function getAllComments(req, res, next) {
+  console.log(req.body.post_id);
+  db.any("SELECT comment FROM comments WHERE post_id=$1", req.body.post_id)
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function getAllLikes(req, res, next) {
+  console.log(req.body.post_id);
+  db.any("SELECT likes_id FROM likes WHERE post_id=$1", req.body.post_id)
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
 module.exports = {
   registerUser: registerUser,
   loginUser: loginUser,
@@ -146,5 +193,9 @@ module.exports = {
   getAllFollowers: getAllFollowers,
   getAllFollowees: getAllFollowees,
   getSingleUser: getSingleUser,
-  getAllImages: getAllImages
+  getAllImages: getAllImages,
+  getSingleUserNoPassword: getSingleUserNoPassword,
+  getAllFeeds: getAllFeeds,
+  getAllComments: getAllComments,
+  getAllLikes: getAllLikes
 };

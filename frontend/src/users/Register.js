@@ -27,7 +27,7 @@ class Register extends React.Component {
         password: password
       })
       .then(res => {
-        this.props.history.push(`/login`);
+        this.props.history.push(`/${this.state.username}`);
 			})
 			.catch(err => {
 				this.setState({
@@ -44,13 +44,13 @@ class Register extends React.Component {
     if (message.length > 0) {
       alreadyExist = "user already exists" ;
     }
-    return ( 
+    return (
       <div className="regMain">
         <div className="regAndLoginDiv">
           <div className="regDiv">
             <img
               className="instaLetters"
-              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png?i=1"
+              src="http://pngimg.com/uploads/instagram/instagram_PNG5.png"
               alt="Instagram"
             />
             <h4 className="signupMsg">
@@ -62,7 +62,7 @@ class Register extends React.Component {
                 placeholder="Username"
                 onChange={this.handleInput}
                 name="username"
-                className="userPassInput"
+                className="regInput"
               />
               <br />
               <input
@@ -70,14 +70,14 @@ class Register extends React.Component {
                 placeholder="Password"
                 onChange={this.handleInput}
                 name="password"
-                className="userPassInput"
+                className="regInput"
               />
               <br />
               <input
                 type="submit"
                 className=""
                 value="Sign up"
-                className="regLoginSubmit"
+                className="regSubmit"
               />
             </form>
 

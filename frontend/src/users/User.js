@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Login from "./Login";
 import Profile from "./Profile";
+import Feed from "./Feed";
 
 class User extends Component {
   constructor() {
@@ -112,7 +113,9 @@ class User extends Component {
   render() {
     const { username, password, loggedIn, message } = this.state;
 
-    return <div>{loggedIn ? this.renderProfile() : this.renderLogin()}</div>;
+    return(<div>
+              {loggedIn ? this.renderProfile() : this.renderLogin()}
+          </div>);
   }
 }
 
